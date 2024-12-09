@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rekomendasi Kopi</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <h1>Rekomendasi untuk "{{ coffee_name }}"</h1>
+    <ul>
+        {% for coffee in recommendations %}
+        <li>{{ coffee }}</li>
+        {% endfor %}
+    </ul>
+    <a href="/">Kembali ke Beranda</a>
+</body>
+</html>

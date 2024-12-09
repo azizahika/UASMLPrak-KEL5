@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+   <head>
+      <!-- Basic -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Rekomendasi Kopi</title>
+      
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+      
+      <!-- Custom CSS -->
+      <link rel="stylesheet" href="/static/css/style.css">
+      <link rel="stylesheet" href="/static/css/responsive.css">
+
+      <!-- Icon & Font -->
+      <link rel="icon" href="/static/images/fevicon.png" type="image/gif">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+      <!-- Scrollbar Custom CSS -->
+      <link rel="stylesheet" href="/static/css/jquery.mCustomScrollbar.min.css">
+      
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   </head>
+   <body>
+      <!-- Header Section -->
+      <div class="header_section header_bg">
+         <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+               <a class="navbar-brand" href="/"><img src="/static/images/logo.png" alt="Logo"></a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ml-auto">
+                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                     <li class="nav-item"><a class="nav-link" href="/coffees">Coffees</a></li>
+                     <li class="nav-item active"><a class="nav-link" href="/review">Review</a></li>
+                  </ul>
+                  <form class="form-inline my-2 my-lg-0">
+                     <div class="login_bt">
+                        <ul>
+                           <li><a href="/rekomendasi"><span aria-hidden="true"></i></span>PILIH KOPIMU</a></li>
+                           <li><a href="#"><i aria-hidden="true"></i></a></li>
+                        </ul>
+
+                  </form>
+               </div>
+            </nav>
+         </div>
+      </div>
+      
+      <!-- Contact Section -->
+      <div class="contact_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-12">
+                  <h1 class="contact_taital">TENTUKAN PILIHANMU!</h1>
+                  <h2 class="text-center">
+                     Pilih kopi favoritmu dari daftar berikut untuk mendapatkan rekomendasi kopi lainnya berdasarkan rating dan review yang telah diberikan oleh pengguna sebelumnya.
+                  </h2>
+                  <div class="bulit_icon"><img src="/static/images/bulit-icon.png" alt="Icon"></div>
+               </div>
+            </div>
+         </div>
+
+         <div class="container-fluid">
+            <div class="contact_section_2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mail_section_1">
+                            <form action="/rekomendasi" method="POST" class="form-container mt-4">
+                                <div class="form-row align-items-center mb-3">
+                                    <div class="col-md-3">
+                                        <label for="coffee_name" class="col-form-label">Pilih Kopi Favorit:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select name="coffee_name" id="coffee_name" class="form-control">
+                                            <!-- Add coffee options here -->
+                                            <option value="Ethiopia Kayon Mountain">Ethiopia Kayon Mountain</option>
+                                            <option value="Organic Ethiopia Kirite">Organic Ethiopia Kirite</option>
+                                            <option value="100% Kona SL-28">100% Kona SL-28</option>
+                                            <option value="Kenya Mutungati">Kenya Mutungati</option>
+                                            <option value="Static Colombia Decaf Midnight">Static Colombia Decaf Midnight</option>
+                                            <option value="Colombia Nariño Duende">Colombia Nariño Duende</option>
+                                            <option value="Blue Label La Esmeralda Porton Pascua Gesha">Blue Label La Esmeralda Porton Pascua Gesha</option>
+                                            <option value="Gedeb Ethiopia">Gedeb Ethiopia</option>
+                                            <option value="Panama Auromar Estate Geisha Peaberry">Panama Auromar Estate Geisha Peaberry</option>
+                                            <option value="Ketiara Sumatra">Ketiara Sumatra</option>
+                                            <option value="Ecuador Finca Cruz Loma">Ecuador Finca Cruz Loma</option>
+                                            <option value="Minanga Village Sulawesi">Minanga Village Sulawesi</option>
+                                            <!-- Other options... -->
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row align-items-center mb-3">
+                                    <div class="col-md-3">
+                                        <label for="top_n" class="col-form-label">Jumlah Rekomendasi:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="number" name="top_n" id="top_n" value="5" min="1" class="form-control" placeholder="Masukkan jumlah rekomendasi">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                   <div class="send_bt">
+                                       <button type="submit" class="btn btn-primary">
+                                           <span>Dapatkan Rekomendasi</span>
+                                       </button>
+                                   </div>
+                                </div>
+                            </form>
+
+                            <!-- Rekomendasi Kopi -->
+                            {% if coffee_name %}
+                            <div class="recommendation mt-5">
+                                <h2 class="text-center">Rekomendasi untuk "{{ coffee_name }}":</h2>
+                                <ul class="list-group">
+                                    {% for recommendation in recommendations %}
+                                    <li class="list-group-item">{{ recommendation }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% elif error_message %}
+                            <p class="text-danger text-center mt-5">{{ error_message }}</p>
+                            {% endif %}
+
+                            <!-- Heatmap Cosine Similarity -->
+                            {% if heatmap_base64 %}
+                            <div class="heatmap mt-5">
+                                <h3 class="text-center">Heatmap Cosine Similarity (Subset)</h3>
+                                <img src="data:image/png;base64,{{ heatmap_base64 }}" alt="Heatmap" class="img-fluid mx-auto d-block">
+                            </div>
+                            {% endif %}
+
+                            <!-- Evaluasi Sistem -->
+                            {% if eval_results %}
+                            <div class="evaluation mt-5">
+                                <h3 class="text-center">Evaluasi Sistem Rekomendasi:</h3>
+                                <ul class="list-group">
+                                    <li class="list-group-item">Akurasi: {{ eval_results.accuracy | round(2) }}</li>
+                                    <li class="list-group-item">Precision: {{ eval_results.precision | round(2) }}</li>
+                                    <li class="list-group-item">Recall: {{ eval_results.recall | round(2) }}</li>
+                                    <li class="list-group-item">F1-Score: {{ eval_results.f1 | round(2) }}</li>
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+      </div>
+
+       <!-- footer section start -->
+       <div class="footer_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12">
+                  <h1 class="address_text">Address</h1>
+                  <p class="footer_text">here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use </p>
+                  <div class="location_text">
+                     <ul>
+                        <li>
+                           <a href="#">
+                           <i class="fa fa-phone" aria-hidden="true"></i><span class="padding_left_10">+01 1234567890</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="#">
+                           <i class="fa fa-envelope" aria-hidden="true"></i><span class="padding_left_10">demo@gmail.com</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+                  <div class="form-group">
+                     <textarea class="update_mail" placeholder="Your Email" rows="5" id="comment" name="Your Email"></textarea>
+                     <div class="subscribe_bt"><a href="#"><img src="/static/images/teligram-icon.png"></a></div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- footer section end -->
+      <!-- copyright section start -->
+      <div class="copyright_section">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-6 col-sm-12">
+                  <p class="copyright_text">2020 All Rights Reserved. Design by <a href="https://html.design">Free Html Templates</a></p>
+               </div>
+               <div class="col-lg-6 col-sm-12">
+                  <div class="footer_social_icon">
+                     <ul>
+                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- copyright section end -->
+      <!-- Javascript files-->
+      <script src="/static/js/jquery.min.js"></script>
+      <script src="/static/js/popper.min.js"></script>
+      <script src="/static/js/bootstrap.bundle.min.js"></script>
+      <script src="/static/js/jquery-3.0.0.min.js"></script>
+      <script src="/static/js/plugin.js"></script>
+      <!-- sidebar -->
+      <script src="/static/js/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="/static/js/custom.js"></script>
+   </body>
+</html>
